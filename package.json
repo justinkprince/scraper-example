@@ -1,0 +1,12 @@
+{
+  "name": "scraper-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^10.0.0"
+  },
+  "scripts": {
+    "scrape": "node src/index.js"
+  }
+}
