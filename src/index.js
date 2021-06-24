@@ -13,17 +13,21 @@ const dataDir = path.resolve(__dirname, '..', 'data');
 
   // With evaluate, we can access the DOM of the target page.
   const events = await page.evaluate(() => {
+    // Utility function to grab the element text or an empty string.
+    const getElementTextBySelector = (selector, defaultText = '') => {
+      const element = event.querySelector(selector);
+
+      return element ? element.innerText : defaultText;
+    };
+
     // Grab all of the event containers.
     const events = document.querySelectorAll('.rhino-event-wrapper');
+
     // Convert the nodelist into an array of objects with just the data we want.
     return Array.prototype.map.call(events, (event) => {
-      // Utility function to grab the element text or an empty string.
-      const getElementTextBySelector = (selector, defaultText = '') => {
-        const element = event.querySelector(selector);
 
-        return element ? element.innerText : defaultText;
-      };
-
+      // The shape of this return object could be anything. Here, we're just querying the DOM for specific
+      // element text and using that to build each object we'll store.
       return {
         date: `${getElementTextBySelector('.rhino-event-datebox-month')}/${getElementTextBySelector('.rhino-event-datebox-date')}`,
         headliner: getElementTextBySelector('.rhino-event-header'),
